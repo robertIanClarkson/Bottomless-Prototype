@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { Description } from './components/Description';
+import { SensorOverlay } from './components/SensorOverlay';
+import { DatabaseInteractions } from './components/DatabaseInteractions';
+
 class App extends Component {
-  state = {users: []}
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: []
+    };
+  }
 
   componentDidMount() {
     fetch('/users')
@@ -13,10 +24,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header/>
+        <hr/>
         <h1>Users</h1>
         {this.state.users.map(user =>
           <div key={user.id}>{user.username}</div>
         )}
+        <hr/>
+        <SensorOverlay/>
+        <hr/>
+        <DatabaseInteractions/>
+        <hr/>
+        <Description/>
+        <hr/>
+        <Footer/>
+
       </div>
     );
   }

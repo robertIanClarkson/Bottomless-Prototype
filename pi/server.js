@@ -67,8 +67,8 @@ const readAccel = (sensor) => {
       y = y * 4.0 / 32768.0;
       z = z * 4.0 / 32768.0;
       finalX += x;
-      finalX += y;
-      finalX += z;
+      finalY += y;
+      finalZ += z;
       if(readCount < bufferSize) {
         readCount += 1;
         resolve(readAccel(sensor))

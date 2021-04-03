@@ -74,8 +74,13 @@ const readAccel = (sensor) => {
         resolve(readAccel(sensor))
       } else {
         x = finalX /bufferSize;
-        x = finalX /bufferSize;
-        x = finalX /bufferSize;
+        y = finalY /bufferSize;
+        z = finalZ /bufferSize;
+
+        x = Math.round((x + Number.EPSILON) * 100) / 100
+        y = Math.round((y + Number.EPSILON) * 100) / 100
+        z = Math.round((z + Number.EPSILON) * 100) / 100
+
         finalX = 0;
         finalY = 0;
         finalZ = 0;

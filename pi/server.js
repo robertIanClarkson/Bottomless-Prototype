@@ -18,6 +18,7 @@ const CTRL_REG7_XL = 0x21;
 const CTRL_REG8    = 0x22;
 const CTRL_REG9    = 0x23;
 const CTRL_REG10   = 0x24;
+const FIFO_CTRL    = 0x2E;
 
 const initialize = (sensor) => {
   let set_g_xl_1  = 0xDB; 
@@ -31,6 +32,8 @@ const initialize = (sensor) => {
   let set_g_xl_9  = 0x00;
   let set_g_xl_10 = 0x00;
 
+  let fifo_ctrl = 0x00;
+
   return new Promise((resolve, reject) => {
     Promise.all([
       sensor.writeByte(accelAddress, CTRL_REG1_G,  set_g_xl_1),
@@ -43,6 +46,7 @@ const initialize = (sensor) => {
       sensor.writeByte(accelAddress, CTRL_REG8,    set_g_xl_8),
       sensor.writeByte(accelAddress, CTRL_REG9,    set_g_xl_9),
       sensor.writeByte(accelAddress, CTRL_REG10,   set_g_xl_10),
+      sensor.writeByte(accelAddress, FIFO_CTRL,    fifo_ctrl)
     ])
     .then(() => {
       resolve(sensor)

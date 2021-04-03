@@ -16,13 +16,18 @@ class App extends Component {
     };
   }
 
+  convertToFarhenheit(word) {
+    let temp = word
+    return temp
+  }
+
   componentDidMount() {
     setInterval(() => {
       fetch('/temp')
         .then(res => res.json())
         .then((data) => {
           this.setState({
-            temp: data.temp,
+            temp: this.convertToFarhenheit(data.temp),
             time: data.time
           })
         });
@@ -34,10 +39,10 @@ class App extends Component {
       <div className="App">
         <Header/>
         <hr/>
-        <h1>Current Temp</h1>
-        <h3>{this.state.temp} at {this.state.time}</h3>
-        <hr/>
-        <SensorOverlay/>
+        <SensorOverlay 
+          temp={this.state.temp} 
+          time={this.state.time}
+        />
         <hr/>
         <DatabaseInteractions/>
         <hr/>

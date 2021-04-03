@@ -4,9 +4,12 @@ const app = express();
 const i2c = require('i2c-bus');
 
 const accelAddress = 0x6B;
-const xAddress = 0x28;
-const yAddress = 0x2A;
-const zAddress = 0x2C;
+const x_l = 0x28;
+const x_h = 0x29;
+const y_l = 0x2A;
+const y_h = 0x2B;
+const z_l = 0x2C;
+const z_h = 0x2D;
 
 const CTRL_REG1_G  = 0x10;
 const CTRL_REG2_G  = 0x11; 
@@ -54,15 +57,26 @@ const initialize = (sensor) => {
   })
 };
 
+const convert = (lsb, msb) => {
+  var result = ((msb & 0xFF) * 256 + (lsb & 0xFF))
+  if (result > 32767) {
+    result -= 65536
+  }
+  return result
+}
+
 const readAccel = (sensor) => {
   return new Promise((resolve, reject) => {
     Promise.all([
-      sensor.readWord(accelAddress, xAddress),
-      sensor.readWord(accelAddress, yAddress),
-      sensor.readWord(accelAddress, zAddress)
+      sensor.readByte(accelAddress, x_l),
+      sensor.readByte(accelAddress, x_h),
+      sensor.readByte(accelAddress, y_l),
+      sensor.readByte(accelAddress, y_h),
+      sensor.readByte(accelAddress, z_l),
+      sensor.readByte(accelAddress, z_h)
     ])
-    .then(([x, y, z]) => {
-      resolve([x, y, z])
+    .then(([xl, xh, yl, yh, zl, zh]) => {
+      resolve([convert(xl, xh), convert(yl, yh), convert(zl, zh)])
     })
   })
 }

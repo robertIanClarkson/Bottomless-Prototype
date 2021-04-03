@@ -80,7 +80,10 @@ app.get('/data', (req, res) => {
     i2c.openPromisified(1)
     .then(readTemp)
     .then((data) => {
-      res.send([data])
+      res.send({
+        temp: data,
+        time: Date.now()
+      })
     })
     .catch((err) => {
       res.send("failed to read sensor")
@@ -91,7 +94,10 @@ app.get('/data', (req, res) => {
     .then(readTemp)
     .then((data) => {
       isInitialized = true
-      res.send([data])
+      res.send({
+        temp: data,
+        time: Date.now()
+      })
     })
     .catch((err) => {
       res.send("failed to read sensor")

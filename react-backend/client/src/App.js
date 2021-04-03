@@ -11,14 +11,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      temp: 0,
+      time : 0
     };
   }
 
   componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+    setInterval(() => {
+      fetch('/temp')
+        .then(res => res.json())
+        .then((data) => {
+          this.setState({
+            temp: data.temp,
+            time: data.time
+          })
+        });
+    }, 1000); 
   }
 
   render() {
@@ -26,10 +34,8 @@ class App extends Component {
       <div className="App">
         <Header/>
         <hr/>
-        <h1>Users</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
+        <h1>Current Temp</h1>
+        <h3>{this.state.temp} at {this.state.time}</h3>
         <hr/>
         <SensorOverlay/>
         <hr/>

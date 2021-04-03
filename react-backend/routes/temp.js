@@ -2,12 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const http = require('http')
-const pi_options = {
-  hostname: "10.0.0.105",
-  port: 3002,
-  path: '/data',
-  method: 'GET'
-}
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -23,13 +17,8 @@ router.get('/', function(req, res, next) {
     apiRes.on('end', () => {
       let jsonData = JSON.parse(rawDataBuffer);
       let temp = jsonData.temp
-      res.json([{
-        id: 1,
-        username: temp
-      }, {
-        id: 2,
-        username: "D0loresH4ze"
-      }]);
+      let time = jsonData.time
+      res.send(jsonData)
     });
   }).on("error", (err) => {
     console.log(err)

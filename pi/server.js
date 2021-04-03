@@ -68,9 +68,9 @@ const convert = (lsb, msb) => {
 const readTemp = (sensor) => {
   return new Promise((resolve, reject) => {
     sensor.readWord(accelAddress, 0x15) 
-    .then((temp) => {
-      resolve(temp)
-    })
+      .then((temp) => {
+        resolve(temp)
+      })
   })
 }
 
@@ -78,9 +78,9 @@ let isInitialized = false;
 app.get('/data', (req, res) => {
   if(isInitialized) {
     i2c.openPromisified(1)
-    .then(readAccel)
+    .then(readTemp)
     .then((data) => {
-      res.send(data)
+      res.send([data])
     })
     .catch((err) => {
       res.send("failed to read sensor")
@@ -88,10 +88,10 @@ app.get('/data', (req, res) => {
   } else {
     i2c.openPromisified(1)
     .then(initialize)
-    .then(readAccel)
+    .then(readTemp)
     .then((data) => {
       isInitialized = true
-      res.send(data)
+      res.send([data])
     })
     .catch((err) => {
       res.send("failed to read sensor")

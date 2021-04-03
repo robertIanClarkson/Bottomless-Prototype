@@ -65,18 +65,11 @@ const convert = (lsb, msb) => {
   return result
 }
 
-const readAccel = (sensor) => {
+const readTemp = (sensor) => {
   return new Promise((resolve, reject) => {
-    Promise.all([
-      sensor.readByte(accelAddress, x_l),
-      sensor.readByte(accelAddress, x_h),
-      sensor.readByte(accelAddress, y_l),
-      sensor.readByte(accelAddress, y_h),
-      sensor.readByte(accelAddress, z_l),
-      sensor.readByte(accelAddress, z_h)
-    ])
-    .then(([xl, xh, yl, yh, zl, zh]) => {
-      resolve([convert(xl, xh), convert(yl, yh), convert(zl, zh)])
+    sensor.readWord(accelAddress, 0x15) 
+    .then((temp) => {
+      resolve(temp)
     })
   })
 }

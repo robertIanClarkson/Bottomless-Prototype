@@ -54,11 +54,6 @@ const initialize = (sensor) => {
   })
 };
 
-let bufferSize = 32;
-let readCount = 0;
-let finalX = 0;
-let finalY = 0;
-let finalZ = 0;
 const readAccel = (sensor) => {
   return new Promise((resolve, reject) => {
     Promise.all([
@@ -67,36 +62,12 @@ const readAccel = (sensor) => {
       sensor.readWord(accelAddress, zAddress)
     ])
     .then(([x, y, z]) => {
-      x = x * 4.0 / 32768.0;
-      y = y * 4.0 / 32768.0;
-      z = z * 4.0 / 32768.0;
-      finalX += x;
-      finalY += y;
-      finalZ += z;
-      if(readCount < bufferSize) {
-        readCount += 1;
-        resolve(readAccel(sensor))
-      } else {
-        x = finalX /bufferSize;
-        y = finalY /bufferSize;
-        z = finalZ /bufferSize;
-
-        x = Math.round((x + Number.EPSILON) * 100) / 100
-        y = Math.round((y + Number.EPSILON) * 100) / 100
-        z = Math.round((z + Number.EPSILON) * 100) / 100
-
-        finalX = 0;
-        finalY = 0;
-        finalZ = 0;
-        readCount = 0;
-        resolve([x, y, z])
-      }
+      resolve([x, y, z])
     })
   })
 }
 
 let isInitialized = false;
-
 app.get('/data', (req, res) => {
   if(isInitialized) {
     i2c.openPromisified(1)

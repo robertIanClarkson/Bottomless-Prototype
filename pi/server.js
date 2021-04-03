@@ -50,6 +50,11 @@ const initialize = (sensor) => {
   })
 };
 
+let bufferSize = 32;
+let readCount = 0;
+let finalX = 0;
+let finalY = 0;
+let finalZ = 0;
 const readAccel = (sensor) => {
   return new Promise((resolve, reject) => {
     Promise.all([
@@ -61,13 +66,22 @@ const readAccel = (sensor) => {
       x = x * 4.0 / 32768.0;
       y = y * 4.0 / 32768.0;
       z = z * 4.0 / 32768.0;
-      console.log(x);
-      console.log(y);
-      console.log(z);
-      sensor.close()
-        .then(() => {
-          resolve([x, y, z])
-        })
+      finalX += x;
+      finalX += y;
+      finalX += z;
+      if(readCount < bufferSize) {
+        readCount += 1;
+        resolve(readAccel(sensor))
+      } else {
+        x = finalX /bufferSize;
+        x = finalX /bufferSize;
+        x = finalX /bufferSize;
+        finalX = 0;
+        finalY = 0;
+        finalZ = 0;
+        readCount = 0;
+        resolve([x, y, z])
+      }
     })
   })
 }

@@ -15,7 +15,10 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  res.send(data) 
+  data.temp += 2;
+  data.time += 2;
+  foo = JSON.stringify(data)
+  res.send(foo) 
 });
 
 module.exports = router;

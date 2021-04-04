@@ -23,15 +23,21 @@ class App extends Component {
 
   componentDidMount() {
     setInterval(() => {
-      fetch('/temp')
-        .then(res => res.json())
-        .then((data) => {
-          this.setState({
-            temp: this.convertToFarhenheit(data.temp),
-            time: data.time
-          })
-        });
-    }, 1000); 
+      try {
+        fetch('/temp')
+          .then(res => res.json())
+          .then((data) => {
+            console.log(data)
+            this.setState({
+              temp: this.convertToFarhenheit(data.temp),
+              time: data.time
+            })
+          });
+      } catch(err) {
+        console.log(err)
+      }
+      
+    }, 2000); 
   }
 
   render() {

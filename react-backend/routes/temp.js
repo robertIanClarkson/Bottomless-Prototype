@@ -5,7 +5,9 @@ const http = require('http')
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  console.log("POST")
+  data = req.body
+  console.log(data)
+  res.sendStatus(200)
 });
 
 module.exports = router;

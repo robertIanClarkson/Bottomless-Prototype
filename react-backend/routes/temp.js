@@ -3,12 +3,29 @@ var router = express.Router();
 
 const http = require('http')
 
+var MongoClient = require("mongodb").MongoClient;  
+
 let static_data = {
   temp: 0,
   time: 0
 };
 
 let static_collect = false;
+
+function store(data) {
+  MongoClient.connect("mongodb://localhost:27017/", function(err, db) {  
+    if (err) next  
+    db  
+      .collection("users")  
+      .find({
+        name: "Robert C"
+      })  
+      .toArray(function(err, result) {  
+        if (err) throw err;  
+        console.log(result)
+      });  
+  });
+}
 
 router.post('/', function(req, res, next) {
   static_data = req.body

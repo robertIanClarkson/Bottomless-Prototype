@@ -5,18 +5,18 @@ const sensor = require('./sensor');
 
 const mac = os.networkInterfaces().wlan0[0].mac;
 
-const options = {
-  hostname: 'ec2-13-52-241-242.us-west-1.compute.amazonaws.com',
-  port: 3001,
-  path: '/temp',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': data.length
-  }
-};
-
 function postData(data) {
+  const options = {
+    hostname: 'ec2-13-52-241-242.us-west-1.compute.amazonaws.com',
+    port: 3001,
+    path: '/temp',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': data.length
+    }
+  };
+  
   const req = http.request(options, res => {
     console.log(`statusCode: ${res.statusCode}`)
   
@@ -40,12 +40,14 @@ function run() {
       setInterval(() => {
         sensor.readTemp(bus)
           .then((temp) => {
+
             data = JSON.stringify({
               mac: mac,
               temp: temp,
               time: Date.now()
-            })
-            postData(data)
+            });
+            
+            postData(data);
           })
       }, 10000);
     })

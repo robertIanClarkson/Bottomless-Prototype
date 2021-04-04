@@ -16,7 +16,7 @@ function postData(data) {
       'Content-Length': data.length
     }
   };
-  
+
   const req = http.request(options, res => {
     console.log(`statusCode: ${res.statusCode}`)
   
@@ -33,7 +33,7 @@ function postData(data) {
   req.end()
 };
 
-function run() {
+function run(refreshRate) {
   i2c.openPromisified(1)
     .then(sensor.initialize)
     .then((bus) => {
@@ -49,11 +49,12 @@ function run() {
             
             postData(data);
           })
-      }, 10000);
+      }, refreshRate);
     })
     .catch(err => {
       console.log(err)
     })
 }
 
-run();
+refreshRate = 2000;
+run(refreshRate);

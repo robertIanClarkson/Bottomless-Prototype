@@ -27,16 +27,28 @@ function store() {
     });  
   });
 }
+
+function query() {
+  MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("temp");
+    dbo.collection("users").findOne({name: "Robert C"}, function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      db.close();
+    });
+  });
+}
+
 router.get('/test', function(req, res, next) {
-  store();
+  query();
   res.sendStatus(200);
 });
 
 router.post('/', function(req, res, next) {
   static_data = req.body
   if(static_collect) {
-    store()
-    console.log("Collected")
+    store();
   }
   res.sendStatus(200)
 });

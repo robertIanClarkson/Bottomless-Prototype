@@ -28,9 +28,37 @@ class App extends Component {
   }
 
   onCollect() {
-    this.setState({
-      collect: !this.state.collect
-    })
+    /* Send Post */
+    let message = "";
+    if(!this.state.collect) {// Collecting - Send start
+      message = JSON.stringify({
+        message: true
+      });
+    } else { // Not Collecting - Send stop
+      message = JSON.stringify({
+        message: false
+      });
+    }
+    let requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Content-Length': message.length
+      },
+      body: message
+    };
+    fetch('/temp/collect', requestOptions)
+      .then((res) => {
+        if(res.ok) {
+          /* State Update */
+          this.setState({
+            collect: !this.state.collect
+          })
+        }
+      })
+    
+
+    
   }
 
   componentDidMount() {

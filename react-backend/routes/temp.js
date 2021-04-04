@@ -13,8 +13,10 @@ let static_data = {
 let static_collect = false;
 
 function store(data) {
-  MongoClient.connect("mongodb://localhost:27017/", {db: temp},function(err, db) {  
-    if (err) next  
+  MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  
+    if (err) {
+      console.log(err)
+    } 
     db  
       .collection("users")  
       .find({
@@ -27,7 +29,8 @@ function store(data) {
   });
 }
 router.get('/test', function(req, res, next) {
-  store(0)
+  store(0);
+  res.sendStatus(200);
 });
 
 router.post('/', function(req, res, next) {

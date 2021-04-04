@@ -12,13 +12,16 @@ let static_data = {
 
 let static_collect = false;
 
-function store(data) {
+// db.users.update({"name" : "Robert C"}, {$push: {readings: "1"}})
+
+function store() {
   MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  
     if (err) {
       console.log(err)
     } 
     db  
       .collection("users")  
+      .update({"name" : "Robert C"}, {$push: {readings: [123, 456]}})
       .find({
         name: "Robert C"
       })  
@@ -29,13 +32,14 @@ function store(data) {
   });
 }
 router.get('/test', function(req, res, next) {
-  store(0);
+  store();
   res.sendStatus(200);
 });
 
 router.post('/', function(req, res, next) {
   static_data = req.body
   if(static_collect) {
+    store()
     console.log("Collected")
   }
   res.sendStatus(200)

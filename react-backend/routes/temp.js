@@ -3,22 +3,20 @@ var router = express.Router();
 
 const http = require('http')
 
-let data = {
+let static_data = {
   temp: 0,
   time: 0
 };
 
 router.post('/', function(req, res, next) {
-  data = req.body
+  static_data = req.body
   console.log(data)
   res.sendStatus(200)
 });
 
 router.get('/', function(req, res, next) {
-  data.temp += 2;
-  data.time += 2;
-  foo = JSON.stringify(data)
-  res.send(foo) 
+  json_data = JSON.stringify(static_data)
+  res.send(json_data) 
 });
 
 module.exports = router;

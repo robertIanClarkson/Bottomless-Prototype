@@ -22,7 +22,7 @@ const CTRL_REG9    = 0x23;
 const CTRL_REG10   = 0x24;
 const FIFO_CTRL    = 0x2E;
 
-export const initialize = (bus) => {
+function initialize(bus) {
   let set_g_xl_1  = 0xDB; 
   let set_g_xl_2  = 0x00;
   let set_g_xl_3  = 0x00;
@@ -56,11 +56,16 @@ export const initialize = (bus) => {
   })
 };
 
-export const readTemp = (bus) => {
+function readTemp(bus) {
   return new Promise((resolve, reject) => {
     bus.readWord(accelAddress, OUT_TEMP) 
       .then((temp) => {
         resolve(temp)
       })
   })
+}
+
+module.exports = {
+  initialize,
+  readTemp
 }

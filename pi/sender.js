@@ -1,9 +1,9 @@
-const os = require("os")
-const http = require('http')
+const os = require("os");
+const http = require('http');
 const i2c = require('i2c-bus');
-import { initialize, readTemp} from "./sensor"
+const sensor = require('./sensor');
 
-const mac = os.networkInterfaces().wlan0[0].mac
+const mac = os.networkInterfaces().wlan0[0].mac;
 
 const options = {
   hostname: 'ec2-13-52-241-242.us-west-1.compute.amazonaws.com',
@@ -14,9 +14,9 @@ const options = {
     'Content-Type': 'application/json',
     'Content-Length': data.length
   }
-}
+};
 
-const postData = (data) => {
+function postData(data) {
   const req = http.request(options, res => {
     console.log(`statusCode: ${res.statusCode}`)
   
@@ -31,14 +31,14 @@ const postData = (data) => {
   
   req.write(data)
   req.end()
-}
+};
 
-const run = () => {
+function run() {
   i2c.openPromisified(1)
-    .then(initialize)
+    .then(sensor.initialize)
     .then((bus) => {
       setInterval(() => {
-        readTemp(bus)
+        sensor.readTemp(bus)
           .then((temp) => {
             data = JSON.stringify({
               mac: mac,

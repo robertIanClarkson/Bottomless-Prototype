@@ -3,7 +3,7 @@ var router = express.Router();
 
 const http = require('http')
 
-var MongoClient = require("mongodb").MongoClient;  
+var MongoClient = require("mongodb").MongoClient({ useUnifiedTopology: true });  
 
 let static_data = {
   temp: 0,
@@ -13,7 +13,7 @@ let static_data = {
 let static_collect = false;
 
 function store(data) {
-  MongoClient.connect("mongodb://localhost:27017/", function(err, db) {  
+  MongoClient.connect("mongodb://localhost:27017/", {db: temp},function(err, db) {  
     if (err) next  
     db  
       .collection("users")  
@@ -26,6 +26,9 @@ function store(data) {
       });  
   });
 }
+router.get('/test', function(req, res, next) {
+  store(0)
+});
 
 router.post('/', function(req, res, next) {
   static_data = req.body

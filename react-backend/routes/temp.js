@@ -16,19 +16,15 @@ let static_collect = false;
 
 function store() {
   MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  
-    if (err) {
-      console.log(err)
-    } 
-    db  
-      .collection("users")  
-      .update({"name" : "Robert C"}, {$push: {readings: [123, 456]}})
-      .find({
-        name: "Robert C"
-      })  
-      .toArray(function(err, result) {  
-        if (err) throw err;  
-        console.log(result)
-      });  
+    if (err) throw err;
+    var dbo = db.db("temp");
+    var myquery = { name: "Robert C" };
+    var newvalues = { $push: {readings: [static_data.time, static_data.temp]} };
+    dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
+      db.close();
+    });  
   });
 }
 router.get('/test', function(req, res, next) {

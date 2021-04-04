@@ -10,7 +10,6 @@ let static_data = {
 
 router.post('/', function(req, res, next) {
   static_data = req.body
-  console.log(data)
   res.sendStatus(200)
 });
 

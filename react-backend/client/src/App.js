@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mac: 0,
       temp: 0,
       time : 0
     };
@@ -21,6 +22,10 @@ class App extends Component {
     return temp
   }
 
+  converTo24hour(time) {
+    return time
+  }
+
   componentDidMount() {
     setInterval(() => {
       try {
@@ -29,15 +34,16 @@ class App extends Component {
           .then((data) => {
             console.log(data)
             this.setState({
+              mac: data.mac,
               temp: this.convertToFarhenheit(data.temp),
-              time: data.time
+              time: this.converTo24hour(data.time)
             })
           });
       } catch(err) {
         console.log(err)
       }
       
-    }, 2000); 
+    }, 1000); 
   }
 
   render() {
@@ -46,6 +52,7 @@ class App extends Component {
         <Header/>
         <hr/>
         <SensorOverlay 
+          mac={this.state.mac}
           temp={this.state.temp} 
           time={this.state.time}
         />

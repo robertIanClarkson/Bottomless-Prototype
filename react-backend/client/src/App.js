@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       mac: 0,
       temp: 0,
-      time : 0
+      time: 0,
+      collect: false
     };
   }
 
@@ -22,8 +23,14 @@ class App extends Component {
     return temp
   }
 
-  converTo24hour(time) {
+  convertTo24hour(time) {
     return time
+  }
+
+  onCollect() {
+    this.setState({
+      collect: !this.state.collect
+    })
   }
 
   componentDidMount() {
@@ -32,11 +39,11 @@ class App extends Component {
         fetch('/temp')
           .then(res => res.json())
           .then((data) => {
-            console.log(data)
+            // console.log(data)
             this.setState({
               mac: data.mac,
               temp: this.convertToFarhenheit(data.temp),
-              time: this.converTo24hour(data.time)
+              time: this.convertTo24hour(data.time)
             })
           });
       } catch(err) {
@@ -57,7 +64,10 @@ class App extends Component {
           time={this.state.time}
         />
         <hr/>
-        <DatabaseInteractions/>
+        <DatabaseInteractions
+          onCollect={this.onCollect.bind(this)}
+          collect={this.state.collect}
+        />
         <hr/>
         <Description/>
         <hr/>

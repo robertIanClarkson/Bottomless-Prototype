@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer";
 import { Description } from './components/Description';
 import { SensorOverlay } from './components/SensorOverlay';
 import { DatabaseInteractions } from './components/DatabaseInteractions';
+import { Line } from '@reactchartjs/react-chart.js';
 
 class App extends Component {
   constructor(props) {
@@ -95,8 +96,37 @@ class App extends Component {
         .catch(err => console.log(err))
     }, 1000); 
   }
+  
+  
 
   render() {
+    let labels = []
+    // for(i = 0; i < this.state.users.)
+
+    let data = {
+      labels: ['1', '2', '3', '4', '5', '6'],
+      datasets: [
+        {
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          fill: false,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgba(255, 99, 132, 0.2)',
+        },
+      ],
+    }
+    
+    let options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    }
     return (
       <div className="App">
         <Header/>
@@ -112,6 +142,21 @@ class App extends Component {
           collect={this.state.collect}
           onQuery={this.onQuery.bind(this)}
           user={this.state.user}
+        />
+        <Line 
+          data={{
+            labels: this.state.user.readings,
+            datasets: [
+              {
+                label: 'Temperature',
+                data: this.state.user.readings,
+                fill: false,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgba(255, 99, 132, 0.2)',
+              },
+            ],
+          }}
+          options={options}
         />
         <hr/>
         <Description/>

@@ -88,7 +88,7 @@ class App extends Component {
           // console.log(data)
           this.setState({
             mac: data.mac,
-            temp: this.convertToFarhenheit(data.temp),
+            temp: data.temp,
             time: this.convertTo24hour(data.time)
           })
         })

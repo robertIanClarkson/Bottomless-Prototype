@@ -1,4 +1,5 @@
 import React from 'react';
+import { Line } from '@reactchartjs/react-chart.js';
 
 export class DatabaseInteractions extends React.Component {
   render() {
@@ -7,6 +8,25 @@ export class DatabaseInteractions extends React.Component {
       collect_status = "Collecting"
     } else {
       collect_status = "Not Collecting"
+    }
+
+    let labels = [];
+    let data = [];
+    for(let i = 0; i < this.props.user.readings.length; i++) {
+      labels.push(this.props.user.readings[i][1])
+      data.push(this.props.user.readings[i][2])
+    }
+    
+    let options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
     }
 
     return (
@@ -104,7 +124,22 @@ export class DatabaseInteractions extends React.Component {
                           <td>{reading[2]}</td>
                       </tr>)}
                 </tbody>
-              </table> 
+              </table>
+              <Line 
+                data={{
+                  labels: labels,
+                  datasets: [
+                    {
+                      label: 'Temperature',
+                      data: data,
+                      fill: false,
+                      backgroundColor: 'rgb(255, 99, 132)',
+                      borderColor: 'rgba(255, 99, 132, 0.2)',
+                    },
+                  ],
+                }}
+                options={options}
+              />
             </div>
           </div>
         </div>

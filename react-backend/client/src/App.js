@@ -6,7 +6,6 @@ import { Footer } from "./components/Footer";
 import { Description } from './components/Description';
 import { SensorOverlay } from './components/SensorOverlay';
 import { DatabaseInteractions } from './components/DatabaseInteractions';
-import { Line } from '@reactchartjs/react-chart.js';
 
 class App extends Component {
   constructor(props) {
@@ -100,25 +99,7 @@ class App extends Component {
   
 
   render() {
-    let labels = [];
-    let data = [];
-    for(i = 0; i < this.state.user.readings.length; i++) {
-      labels.push(this.state.user.readings[i][1])
-      data.push(this.state.user.readings[i][2])
-    }
-    
-    let options = {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-    }
-    
+
     return (
       <div className="App">
         <Header/>
@@ -134,21 +115,6 @@ class App extends Component {
           collect={this.state.collect}
           onQuery={this.onQuery.bind(this)}
           user={this.state.user}
-        />
-        <Line 
-          data={{
-            labels: labels,
-            datasets: [
-              {
-                label: 'Temperature',
-                data: data,
-                fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
-              },
-            ],
-          }}
-          options={options}
         />
         <hr/>
         <Description/>

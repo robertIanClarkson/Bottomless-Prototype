@@ -13,6 +13,14 @@ export class DatabaseInteractions extends React.Component {
         <h1>Database Interactions</h1>
         <button onClick={this.props.onCollect}>{collect_status}</button>
         <button onClick={this.props.onQuery}>Query</button>
+        <hr/>
+        <h2>User: {this.props.user.name}</h2>
+        <h3>Location: {this.props.location}</h3>
+        <h3>Hardware Status: {this.props.hardware}</h3>
+        <h3>Readings:</h3>
+        <ul>
+          {this.props.users.readings.map((reading) => <li>Temp: {reading[0]} | Time: {reading[1]}</li>)}
+        </ul>
       </div>
     );
   }

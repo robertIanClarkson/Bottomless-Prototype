@@ -14,7 +14,13 @@ class App extends Component {
       mac: 0,
       temp: 0,
       time: 0,
-      collect: false
+      collect: false,
+      user: {
+        name: "Name Not Set",
+        location: "Location Not Set",
+        Harware: "Hardware Not Set",
+        readings: [["Time Not Set", "Temp Not Set"]]
+      }
     };
   }
 
@@ -63,6 +69,9 @@ class App extends Component {
       .then(res => res.json())
       .then((result) => {
         console.log(result)
+        this.setState({
+          user: result
+        })
       })
   }
 
@@ -97,6 +106,7 @@ class App extends Component {
           onCollect={this.onCollect.bind(this)}
           collect={this.state.collect}
           onQuery={this.onQuery.bind(this)}
+          user={this.state.user}
         />
         <hr/>
         <Description/>

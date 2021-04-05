@@ -8,6 +8,7 @@ export class DatabaseInteractions extends React.Component {
     } else {
       collect_status = "Not Collecting"
     }
+
     return (
       <div>
         <h1>Database Interactions</h1>
@@ -16,10 +17,10 @@ export class DatabaseInteractions extends React.Component {
         <hr/>
         <h2>User: {this.props.user.name}</h2>
         <h3>Location: {this.props.user.location}</h3>
-        <h3>Hardware Status: {this.props.user.hardware}</h3>
+        <h3>Hardware Status: {this.props.user.hardware.toString()}</h3>
         <h3>Readings:</h3>
         <ul>
-          {this.props.user.readings.map((reading) => <li>Temp: {reading[0]} | Time: {reading[1]}</li>)}
+          {this.props.user.readings.map((reading, i) => <li key={i}>Temp: {reading[0]} | Time: {reading[1]}</li>)}
         </ul>
       </div>
     );

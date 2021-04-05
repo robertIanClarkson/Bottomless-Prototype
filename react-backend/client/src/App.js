@@ -18,7 +18,7 @@ class App extends Component {
       user: {
         name: "Name Not Set",
         location: "Location Not Set",
-        Harware: "Hardware Not Set",
+        hardware: "Hardware Not Set",
         readings: [["Time Not Set", "Temp Not Set"]]
       }
     };

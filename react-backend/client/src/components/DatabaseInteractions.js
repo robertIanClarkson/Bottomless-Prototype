@@ -15,8 +15,8 @@ export class DatabaseInteractions extends React.Component {
         <button onClick={this.props.onQuery}>Query</button>
         <hr/>
         <h2>User: {this.props.user.name}</h2>
-        <h3>Location: {this.props.location}</h3>
-        <h3>Hardware Status: {this.props.hardware}</h3>
+        <h3>Location: {this.props.user.location}</h3>
+        <h3>Hardware Status: {this.props.user.hardware}</h3>
         <h3>Readings:</h3>
         <ul>
           {this.props.user.readings.map((reading) => <li>Temp: {reading[0]} | Time: {reading[1]}</li>)}

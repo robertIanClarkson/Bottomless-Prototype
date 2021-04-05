@@ -40,7 +40,7 @@ function run(refreshRate) {
       setInterval(() => {
         sensor.readTemp(bus)
           .then((temp) => {
-
+            console.log(Date.UTC())
             data = JSON.stringify({
               mac: mac,
               temp: temp,

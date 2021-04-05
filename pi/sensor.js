@@ -65,6 +65,20 @@ function initialize(bus) {
 //   })
 // }
 
+// function readTemp(bus) {
+//   return new Promise((resolve, reject) => {
+//     Promise.all([
+//       bus.readByte(accelAddress, 0x15),
+//       bus.readByte(accelAddress, 0x16)
+//     ])
+//     .then(([low, high]) => {
+//       let temp = (((high << 8) & low) / 16.0) + 21.0;
+//       // console.log(temp);
+//       resolve(temp);
+//     })
+//   });
+// }
+
 function readTemp(bus) {
   return new Promise((resolve, reject) => {
     Promise.all([
@@ -72,8 +86,13 @@ function readTemp(bus) {
       bus.readByte(accelAddress, 0x16)
     ])
     .then(([low, high]) => {
-      let temp = (((high << 8) & low) / 16.0) + 21.0;
-      // console.log(temp);
+      let temp = high << 8 | low;
+      temp = parseInt(temp, 10);
+      if(high == 255) {
+        temp -= 65536;
+      }
+      temp += 54;
+      // console.log(`final: ${temp}`);
       resolve(temp);
     })
   });

@@ -6,6 +6,7 @@ const http = require('http')
 var MongoClient = require("mongodb").MongoClient({ useUnifiedTopology: true });  
 
 let static_data = {
+  mac: 0,
   temp: 0,
   time: 0
 };
@@ -13,14 +14,14 @@ let static_data = {
 let static_collect = false;
 
 // db.users.update({"name" : "Robert C"}, {$push: {readings: "1"}})
-// db.users.insertOne({name:"Robert C", location:"San Francisco", hardware:true, readings:[]})
+// db.users.insertOne({name:"Robert C", location:"San Francisco", hardware:true, readings:[0, 0, 0]})
 
 function store() {
   MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  
     if (err) throw err;
     var dbo = db.db("temp");
     var myquery = { name: "Robert C" };
-    var newvalues = { $push: {readings: [static_data.time, static_data.temp]} };
+    var newvalues = { $push: {readings: [static_data.mac, static_data.time, static_data.temp]} };
     dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
       if (err) throw err;
       console.log("1 document updated");

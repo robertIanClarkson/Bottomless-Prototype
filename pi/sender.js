@@ -34,6 +34,7 @@ function postData(data) {
 };
 
 function run(refreshRate) {
+  let time = new Date();
   i2c.openPromisified(1)
     .then(sensor.initialize)
     .then((bus) => {
@@ -44,7 +45,7 @@ function run(refreshRate) {
             data = JSON.stringify({
               mac: mac,
               temp: temp,
-              time: Date.now()
+              time: time.toString()
             });
             
             postData(data);

@@ -13,6 +13,7 @@ let static_data = {
 let static_collect = false;
 
 // db.users.update({"name" : "Robert C"}, {$push: {readings: "1"}})
+// db.users.insertOne({name:"Robert C", location:"San Francisco", hardware:true, readings:[]})
 
 function store() {
   MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  
@@ -29,15 +30,18 @@ function store() {
 }
 
 function query() {
-  MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("temp");
-    dbo.collection("users").findOne({name: "Robert C"}, function(err, result) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {
       if (err) throw err;
-      console.log(result);
-      db.close();
+      var dbo = db.db("temp");
+      dbo.collection("users").findOne({name: "Robert C"}, function(err, result) {
+        if (err) throw err;
+        db.close();
+        resolve(result)
+      });
     });
-  });
+  })
+  
 }
 
 router.get('/test', function(req, res, next) {
@@ -63,5 +67,13 @@ router.post('/collect', function(req, res, next) {
   // console.log(`Collect: ${static_collect}`)
   res.sendStatus(200)
 });
+
+router.get('/query', function(req, res, next) {
+  query()
+    .then((result) => {
+      console.log(result)
+      res.send(result)
+    })
+})
 
 module.exports = router;

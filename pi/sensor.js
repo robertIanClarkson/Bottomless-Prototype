@@ -56,13 +56,27 @@ function initialize(bus) {
   })
 };
 
+// function readTemp(bus) {
+//   return new Promise((resolve, reject) => {
+//     bus.readWord(accelAddress, OUT_TEMP) 
+//       .then((temp) => {
+//         resolve(temp)
+//       })
+//   })
+// }
+
 function readTemp(bus) {
   return new Promise((resolve, reject) => {
-    bus.readWord(accelAddress, OUT_TEMP) 
-      .then((temp) => {
-        resolve(temp)
-      })
-  })
+    Promise.all([
+      bus.readByte(accelAddress, 0x15),
+      bus.readByte(accelAddress, 0x16)
+    ])
+    .then(([low, high]) => {
+      let temp = (((high << 8) & low) / 16.0) + 21.0;
+      // console.log(temp);
+      resolve(temp);
+    })
+  });
 }
 
 module.exports = {

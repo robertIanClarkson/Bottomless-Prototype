@@ -4,7 +4,8 @@ export class SensorOverlay extends React.Component {
   render() {
     return (
       <div className="container" id="sensor-overlay-parent">
-        <h1 id="section-title">Sensor Overlay</h1>
+        <h1 id="section-title">Live Data</h1>
+        <p className="text-center">From my apartment...</p>
         <div className="container" id="sensor-overlay-container">
           <div className="row align-items-start">
             <div className="col-6">

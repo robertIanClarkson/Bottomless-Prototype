@@ -12,7 +12,7 @@ export class DatabaseInteractions extends React.Component {
       <div>
         <h1>Database Interactions</h1>
         <button onClick={this.props.onCollect}>{collect_status}</button>
-        {/* <button onClick={this.props.onQuery}>Query</button> */}
+        <button onClick={this.props.onQuery}>Query</button>
       </div>
     );
   }

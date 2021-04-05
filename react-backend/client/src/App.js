@@ -56,28 +56,29 @@ class App extends Component {
           })
         }
       })
-    
+  }
 
-    
+  onQuery() {
+    fetch('/query')
+      .then(res => res.json())
+      .then((result) => {
+        console.log(result)
+      })
   }
 
   componentDidMount() {
     setInterval(() => {
-      try {
-        fetch('/temp')
-          .then(res => res.json())
-          .then((data) => {
-            // console.log(data)
-            this.setState({
-              mac: data.mac,
-              temp: this.convertToFarhenheit(data.temp),
-              time: this.convertTo24hour(data.time)
-            })
-          });
-      } catch(err) {
-        console.log(err)
-      }
-      
+      fetch('/temp')
+        .then(res => res.json())
+        .then((data) => {
+          // console.log(data)
+          this.setState({
+            mac: data.mac,
+            temp: this.convertToFarhenheit(data.temp),
+            time: this.convertTo24hour(data.time)
+          })
+        })
+        .catch(err => console.log(err))
     }, 1000); 
   }
 
@@ -95,6 +96,7 @@ class App extends Component {
         <DatabaseInteractions
           onCollect={this.onCollect.bind(this)}
           collect={this.state.collect}
+          onQuery={this.onQuery.bind(this)}
         />
         <hr/>
         <Description/>

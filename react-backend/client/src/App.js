@@ -100,20 +100,11 @@ class App extends Component {
   
 
   render() {
-    let labels = []
-    // for(i = 0; i < this.state.users.)
-
-    let data = {
-      labels: ['1', '2', '3', '4', '5', '6'],
-      datasets: [
-        {
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          fill: false,
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgba(255, 99, 132, 0.2)',
-        },
-      ],
+    let labels = [];
+    let data = [];
+    for(i = 0; i < this.state.user.readings.length; i++) {
+      labels.push(this.state.user.readings[i][1])
+      data.push(this.state.user.readings[i][2])
     }
     
     let options = {
@@ -127,6 +118,7 @@ class App extends Component {
         ],
       },
     }
+    
     return (
       <div className="App">
         <Header/>
@@ -145,11 +137,11 @@ class App extends Component {
         />
         <Line 
           data={{
-            labels: this.state.user.readings,
+            labels: labels,
             datasets: [
               {
                 label: 'Temperature',
-                data: this.state.user.readings,
+                data: data,
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgba(255, 99, 132, 0.2)',

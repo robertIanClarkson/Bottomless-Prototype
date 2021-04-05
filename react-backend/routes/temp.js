@@ -24,7 +24,7 @@ function store() {
     var newvalues = { $push: {readings: [static_data.mac, static_data.time, static_data.temp]} };
     dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
       if (err) throw err;
-      console.log("1 document updated");
+      // console.log("1 document updated");
       db.close();
     });  
   });
@@ -72,7 +72,7 @@ router.post('/collect', function(req, res, next) {
 router.get('/query', function(req, res, next) {
   query()
     .then((result) => {
-      console.log(result)
+      // console.log(result)
       res.send(result)
     })
 })

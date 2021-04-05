@@ -68,7 +68,7 @@ class App extends Component {
     fetch('/temp/query')
       .then(res => res.json())
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         this.setState({
           user: {
             name: result.name,

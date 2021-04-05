@@ -19,7 +19,7 @@ export class DatabaseInteractions extends React.Component {
         <h3>Hardware Status: {this.props.hardware}</h3>
         <h3>Readings:</h3>
         <ul>
-          {this.props.users.readings.map((reading) => <li>Temp: {reading[0]} | Time: {reading[1]}</li>)}
+          {this.props.user.readings.map((reading) => <li>Temp: {reading[0]} | Time: {reading[1]}</li>)}
         </ul>
       </div>
     );

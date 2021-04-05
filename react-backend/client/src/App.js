@@ -65,7 +65,7 @@ class App extends Component {
   }
 
   onQuery() {
-    fetch('/query')
+    fetch('/temp/query')
       .then(res => res.json())
       .then((result) => {
         console.log(result)

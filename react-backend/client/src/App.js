@@ -19,7 +19,7 @@ class App extends Component {
         name: "Name Not Set",
         location: "Location Not Set",
         hardware: "Hardware Not Set",
-        readings: [["Time Not Set", "Temp Not Set"]]
+        readings: [["MAC Not Set", "Time Not Set", "Temp Not Set"]]
       }
     };
   }

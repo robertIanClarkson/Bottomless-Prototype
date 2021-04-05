@@ -70,7 +70,12 @@ class App extends Component {
       .then((result) => {
         console.log(result)
         this.setState({
-          user: result
+          user: {
+            name: result.name,
+            location: result.location,
+            hardware: result.hardware,
+            readings: result.readings
+          }
         })
       })
   }

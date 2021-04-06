@@ -12,7 +12,7 @@ export const Description = (props) => {
             <ul>
               <li>AWS EC2 for website deployment</li>
               <li>ExpressJS for backend</li>
-              <li>Reactjs for frontend</li>
+              <li>React for frontend</li>
               <li>Bootstrap for CSS styling</li>
               <li>Google Fonts</li>
               <li>ChartJS for charts</li>

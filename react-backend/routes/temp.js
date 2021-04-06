@@ -15,6 +15,7 @@ let static_collect = false;
 
 // db.users.update({"name" : "Robert C"}, {$push: {readings: "1"}})
 // db.users.insertOne({name:"Robert C", location:"San Francisco", hardware:true, readings:[]})
+// db.users.deleteOne({name:"Robert C"})
 
 function store() {
   MongoClient.connect("mongodb://localhost:27017/temp", function(err, db) {  

@@ -15,6 +15,7 @@ export const Description = (props) => {
               <li>Reactjs for frontend</li>
               <li>Bootstrap for CSS styling</li>
               <li>Google Fonts</li>
+              <li>ChartJS for charts</li>
               <li>MongoDB for database</li>
               <li>Raspberry Pi to interface with our sensor board</li>
             </ul>

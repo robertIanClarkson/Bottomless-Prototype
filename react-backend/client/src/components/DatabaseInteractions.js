@@ -131,23 +131,6 @@ export class DatabaseInteractions extends React.Component {
             ? <div className="row align-items-start"><Line data={{labels: labels,datasets: [{label: 'Temperature', data: data, fill: false, backgroundColor: 'rgb(255, 99, 132)', borderColor: 'rgba(255, 99, 132, 0.2)',},],}} options={options}/></div>
             : null
           }
-          {/* <div className="row align-items-start">
-            <Line 
-              data={{
-                labels: labels,
-                datasets: [
-                  {
-                    label: 'Temperature',
-                    data: data,
-                    fill: false,
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgba(255, 99, 132, 0.2)',
-                  },
-                ],
-              }}
-              options={options}
-            />
-          </div> */}
         </div>
       </div>
     );
